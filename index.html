@@ -1,0 +1,174 @@
+<!Doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculator</title>
+  <link rel="icon" href="https://i.postimg.cc/h4Z2Br3F/calc.png" type="image/png">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: url("https://i.postimg.cc/0Nqq8Z32/pexels-umkreisel-app-956999.jpg") no-repeat fixed;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      flex-direction: column;
+    }
+
+    #calc {
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 300px;
+    }
+
+    #dsp {
+      width: 100%;
+      border-radius: 15px;
+      border: none;
+      text-align:right;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.2);
+      color: black;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      outline: none;
+    }
+
+    #ks {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 15px;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: #fff;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #d3d3d3;
+    }
+
+    button:active {
+      background-color: #a9a9a9;
+      transform: scale(1);
+    }
+
+    .operator {
+      background-color: orange;
+      color: white;
+    }
+
+    footer#copyright {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.5rem;
+      color: white;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 12px;
+      border-radius: 15px;
+      font-weight: bold;
+      width: fit-content;
+    }
+
+    @media (max-width: 480px) {
+      #dsp {
+        font-size: 1.5rem;
+        padding: 12px;
+      }
+
+      button {
+        font-size: 1.2rem;
+        border-radius: 10px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      #dsp {
+        font-size: 1.2rem;
+        padding: 10px;
+      }
+
+      button {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="calc">
+    <input id="dsp" readonly placeholder="أحسب هنا">
+    <div id="ks">
+      <button onclick="appendToDisplay('+')" class="operator">+</button>
+      <button onclick="appendToDisplay('٧')">٧</button>
+      <button onclick="appendToDisplay('٨')">٨</button>
+      <button onclick="appendToDisplay('٩')">٩</button>
+      <button onclick="appendToDisplay('-')" class="operator">−</button>
+      <button onclick="appendToDisplay('٤')">٤</button>
+      <button onclick="appendToDisplay('٥')">٥</button>
+      <button onclick="appendToDisplay('٦')">٦</button>
+      <button onclick="appendToDisplay('*')" class="operator">*</button>
+      <button onclick="appendToDisplay('١')">١</button>
+      <button onclick="appendToDisplay('٢')">٢</button>
+      <button onclick="appendToDisplay('٣')">٣</button>
+      <button onclick="appendToDisplay('/')" class="operator">/</button>
+      <button onclick="appendToDisplay('٠')">٠</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="clearDisplay()" class="operator">مسح</button>
+    </div>
+  </div>
+
+  <footer id="copyright">
+    © إبراهيم هاني - جميع الحقوق محفوظة
+  </footer>
+
+  <script>
+    const dsp = document.getElementById("dsp");
+
+    function appendToDisplay(value) {
+      dsp.value += value;
+    }
+
+    function clearDisplay() {
+      dsp.value = "";
+    }
+
+    function arabicToEnglishNumbers(str) {
+      return str.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+    }
+
+    function calculate() {
+      try {
+        const expression = arabicToEnglishNumbers(dsp.value);
+        dsp.value = eval(expression);
+      } catch {
+        dsp.value = "خطأ حاسبي";
+      }
+    }
+  </script>
+</body>
+</html>
