@@ -1,4 +1,4 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -17,7 +17,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
       padding: 10px;
@@ -31,14 +31,14 @@
       padding: 20px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.3);
       width: 100%;
-      max-width: 300px;
+      max-width: 400px;
     }
 
     #dsp {
       width: 100%;
       border-radius: 15px;
       border: none;
-      text-align:right;
+      text-align: right;
       backdrop-filter: blur(15px);
       background: rgba(255, 255, 255, 0.2);
       color: black;
@@ -51,7 +51,7 @@
 
     #ks {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
       gap: 10px;
     }
 
@@ -85,13 +85,14 @@
     footer#copyright {
       margin-top: 20px;
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: white;
       background: rgba(0, 0, 0, 0.4);
       padding: 10px 12px;
       border-radius: 15px;
       font-weight: bold;
       width: fit-content;
+      max-width: 90%;
     }
 
     @media (max-width: 480px) {
