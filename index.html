@@ -1,175 +1,353 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Calculator</title>
-  <link rel="icon" href="https://i.postimg.cc/h4Z2Br3F/calc.png" type="image/png">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<title>
+آلة حاسبة فشخة 
+</title>
+<link rel="icon" href="https://i.postimg.cc/h4Z2Br3F/calc.png" type="image/png">
+<style>
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: url('https://i.postimg.cc/0Nqq8Z32/pexels-umkreisel-app-956999.jpg') no-repeat fixed;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    flex-direction: column;
+    color: black;
+    transition: background 0.5s ease;
+  }
+  body.dark-theme {
+    background: url('https://i.postimg.cc/FR3bwWW5/pexels-padrinan-19670.png') no-repeat fixed;
+    background-position: center;
+    background-size: cover;
+    color: white;
+  }
+  #calc {
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 425px;
+    min-width: 280px;
+    direction: rtl;
+    color: inherit;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+  body.dark-theme #calc {
+    background: rgba(0,0,0,0.5);
+  }
+  #dsp {
+    width: 100%;
+    border-radius: 15px;
+    border: none;
+    text-align: right;
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.2);
+    color: black;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    font-weight: bold;
+    outline: none;
+    transition: background 0.5s ease, color 0.5s ease;
+    word-wrap: break-word;
+    min-height: 60px;
+    overflow-x: auto;
+  }
+  body.dark-theme #dsp {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+  }
+  #ks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(8px, 2vw, 10px);
+  }
+  button {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 15px;
+    border: none;
+    font-size: clamp(1rem, 5vw, 1.5rem);
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #fff;
+    color: black;
+    transition: all 0.2s ease;
+    user-select: none;
+    touch-action: manipulation;
+  }
+  body.dark-theme button {
+    background-color: #333;
+    color: white;
+  }
+  button:hover, button:focus-visible {
+    transform: scale(1.05);
+    background-color: #d3d3d3;
+  }
+  body.dark-theme button:hover, body.dark-theme button:focus-visible {
+    background-color: #555;
+  }
+  button:active {
+    background-color: #a9a9a9;
+    transform: scale(0.98);
+  }
+  body.dark-theme button:active {
+    background-color: #666;
+  }
+  .operator {
+    background-color: orange !important;
+    color: white !important;
+  }
+  .img-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  .img-btn img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 15px;
+    pointer-events: none;
+  }
+  .img-btn:hover, .img-btn:focus-visible {
+    transform: scale(1.1);
+  }
+  footer#copyright {
+    margin-top: 20px;
+    text-align: center;
+    font-size: clamp(0.9rem, 3vw, 1.5rem);
+    color: white;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px 12px;
+    border-radius: 20px 10px 30%;
+    font-weight: bold;
+    width: fit-content;
+    max-width: 90%;
+  }
+  @keyframes shine {
+    0% {background-position: -200% 0;}
+    100% {background-position: 200% 0;}
+  }
+  #dsp::placeholder {
+    font-weight: bold;
+    color: transparent;
+    background: linear-gradient(90deg, red, orange, yellow, red);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine 3s linear infinite;
+  }
+  .theme-switch {
+    position: absolute;
+    top: clamp(10px, 3vw, 20px);
+    right: clamp(10px, 3vw, 20px);
+    width: clamp(50px, 12vw, 60px);
+    height: clamp(28px, 8vw, 34px);
+    display: inline-block;
+  }
+  .theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  .slider::before {
+    position: absolute;
+    content: "";
+    height: calc(100% - 8px);
+    width: calc(100% - 8px);
+    max-height: 26px;
+    max-width: 26px;
+    left: 4px; bottom: 4px;
+    background-image: url("https://i.postimg.cc/yNHpHPqs/light.png");
+    background-size: cover;
+    background-position: center;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+  }
+  input:checked + .slider {
+    background-color: #333;
+  }
+  input:checked + .slider::before {
+    transform: translateX(calc(100% - 8px));
+    background-image: url("https://i.postimg.cc/cC7sFvMW/dark.png");
+  }
 
-    body {
-      background: url("https://i.postimg.cc/0Nqq8Z32/pexels-umkreisel-app-956999.jpg") no-repeat fixed;
-      background-position: center;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      padding: 10px;
-      flex-direction: column;
-    }
-
+  /* Responsive improvements */
+  @media (max-width: 600px) {
     #calc {
-      backdrop-filter: blur(15px);
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 25px;
-      padding: 20px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-      width: 100%;
-      max-width: 400px;
-    }
-
-    #dsp {
-      width: 100%;
-      border-radius: 15px;
-      border: none;
-      text-align: right;
-      backdrop-filter: blur(15px);
-      background: rgba(255, 255, 255, 0.2);
-      color: black;
       padding: 15px;
-      margin-bottom: 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      outline: none;
+      border-radius: 20px;
     }
-
-    #ks {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-      gap: 10px;
+    #dsp {
+      padding: 12px;
+      min-height: 50px;
     }
-
     button {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 15px;
-      border: none;
-      font-size: 1.5rem;
-      font-weight: bold;
-      cursor: pointer;
-      background-color: #fff;
-      transition: 0.2s ease;
+      border-radius: 12px;
     }
-
-    button:hover {
-      transform: scale(1.05);
-      background-color: #d3d3d3;
+  }
+  @media (max-width: 400px) {
+    #calc {
+      padding: 12px;
     }
-
-    button:active {
-      background-color: #a9a9a9;
-      transform: scale(1);
+    #dsp {
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      padding: 10px;
+      min-height: 45px;
     }
-
-    .operator {
-      background-color: orange;
-      color: white;
+    button {
+      font-size: clamp(0.9rem, 4.5vw, 1.2rem);
+      border-radius: 10px;
     }
-
-    footer#copyright {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 1.2rem;
-      color: white;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px 12px;
-      border-radius: 15px;
-      font-weight: bold;
-      width: fit-content;
-      max-width: 90%;
+    #ks {
+      gap: 6px;
     }
-
-    @media (max-width: 480px) {
-      #dsp {
-        font-size: 1.5rem;
-        padding: 12px;
-      }
-
-      button {
-        font-size: 1.2rem;
-        border-radius: 10px;
-      }
+  }
+  @media (max-width: 320px) {
+    #dsp {
+      min-height: 40px;
     }
-
-    @media (max-width: 320px) {
-      #dsp {
-        font-size: 1.2rem;
-        padding: 10px;
-      }
-
-      button {
-        font-size: 1rem;
-      }
+    button {
+      font-size: clamp(0.8rem, 4vw, 1rem);
     }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <div id="calc">
-    <input id="dsp" readonly placeholder="أحسب هنا">
-    <div id="ks">
-      <button onclick="appendToDisplay('+')" class="operator">+</button>
-      <button onclick="appendToDisplay('٧')">٧</button>
-      <button onclick="appendToDisplay('٨')">٨</button>
-      <button onclick="appendToDisplay('٩')">٩</button>
-      <button onclick="appendToDisplay('-')" class="operator">−</button>
-      <button onclick="appendToDisplay('٤')">٤</button>
-      <button onclick="appendToDisplay('٥')">٥</button>
-      <button onclick="appendToDisplay('٦')">٦</button>
-      <button onclick="appendToDisplay('*')" class="operator">*</button>
-      <button onclick="appendToDisplay('١')">١</button>
-      <button onclick="appendToDisplay('٢')">٢</button>
-      <button onclick="appendToDisplay('٣')">٣</button>
-      <button onclick="appendToDisplay('/')" class="operator">/</button>
-      <button onclick="appendToDisplay('٠')">٠</button>
-      <button onclick="appendToDisplay('.')">.</button>
-      <button onclick="calculate()">=</button>
-      <button onclick="clearDisplay()" class="operator">مسح</button>
-    </div>
+<label class="theme-switch">
+  <input type="checkbox" id="theme-toggle">
+  <span class="slider">
+  </span>
+</label>
+
+<div id="calc">
+  <input id="dsp" readonly placeholder="احسب اللي في دماغك">
+  <div id="ks">
+    <button onclick="appendToDisplay('+')" class="operator">+</button>
+    <button onclick="appendToDisplay('7')">٧</button>
+    <button onclick="appendToDisplay('8')">٨</button>
+    <button onclick="appendToDisplay('9')">٩</button>
+    <button onclick="appendToDisplay('-')" class="operator">−</button>
+    <button onclick="appendToDisplay('4')">٤</button>
+    <button onclick="appendToDisplay('5')">٥</button>
+    <button onclick="appendToDisplay('6')">٦</button>
+    <button onclick="appendToDisplay('*')" class="operator">*</button>
+    <button onclick="appendToDisplay('1')">١</button>
+    <button onclick="appendToDisplay('2')">٢</button>
+    <button onclick="appendToDisplay('3')">٣</button>
+    <button onclick="appendToDisplay('/')" class="operator">÷</button>
+    <button onclick="appendToDisplay('0')">٠</button>
+    <button onclick="appendToDisplay('.')">.</button>
+    <button onclick="calculate()">احسبهالي</button>
+    <button onclick="clearDisplay()" class="operator">امسح يا معلم</button>
+    <button onclick="deleteLastValue()" class="img-btn">
+      <img src="https://i.postimg.cc/cCg2cMGt/back.png" alt="DEL">
+    </button>
   </div>
+</div>
 
-  <footer id="copyright">
-    © إبراهيم هاني - جميع الحقوق محفوظة
-  </footer>
+<footer id="copyright">
+  © إبراهيم هاني - كل الحقوق محفوظة
+</footer>
 
-  <script>
-    const dsp = document.getElementById("dsp");
+<script>
+  const dsp = document.getElementById("dsp");
+  const toggle = document.getElementById("theme-toggle");
+  const body = document.body;
 
-    function appendToDisplay(value) {
-      dsp.value += value;
-    }
+  function appendToDisplay(value) {
+    dsp.value += value;
+  }
+  function clearDisplay() {
+    dsp.value = "";
+  }
+  function calculate() {
+    try {
+   
+      let expr = dsp.value;
+      
 
-    function clearDisplay() {
-      dsp.value = "";
-    }
+      expr = expr.replace(/÷/g, "/").replace(/×/g, "*").replace(/−/g, "-").replace(/٫/g, ".");
+      
 
-    function arabicToEnglishNumbers(str) {
-      return str.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
-    }
-
-    function calculate() {
-      try {
-        const expression = arabicToEnglishNumbers(dsp.value);
-        dsp.value = eval(expression);
-      } catch {
-        dsp.value = "خطأ حاسبي";
+      const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+      for(let i=0; i<arabicNums.length; i++) {
+        const regex = new RegExp(arabicNums[i], 'g');
+        expr = expr.replace(regex, i);
       }
+
+      expr = expr.replace(/\s+/g, '');
+
+
+      if(expr.trim() === "") {
+        dsp.value = "";
+        return;
+      }
+
+      let result = eval(expr);
+
+      if(typeof result === "number") {
+        result = +result.toFixed(8); // 8 أرقام بعد الفاصلة كفاية
+      }
+
+      dsp.value = result;
+    } catch (e) {
+      dsp.value = "غلط يا باشا 🤦‍♂️";
     }
-  </script>
+  }
+  function deleteLastValue() {
+    dsp.value = dsp.value.slice(0, -1);
+  }
+  function applySavedTheme() {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      toggle.checked = true;
+      body.classList.add("dark-theme");
+    } else {
+      toggle.checked = false;
+      body.classList.remove("dark-theme");
+    }
+  }
+  toggle.addEventListener("change", () => {
+    if (toggle.checked) {
+      body.classList.add("dark-theme");
+      localStorage.setItem("theme", "dark");
+    } else {
+      body.classList.remove("dark-theme");
+      localStorage.setItem("theme", "light");
+    }
+  });
+  applySavedTheme();
+</script>
 </body>
 </html>
