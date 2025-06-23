@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-<title>
-آلة حاسبة فشخة 
-</title>
-<link rel="icon" href="https://i.postimg.cc/h4Z2Br3F/calc.png" type="image/png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<title>آلة حاسبة فشخة</title>
+<link rel="icon" href="https://i.postimg.cc/h4Z2Br3F/calc.png" type="image/png" />
 <style>
   * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    background: url('https://i.postimg.cc/0Nqq8Z32/pexels-umkreisel-app-956999.jpg') no-repeat fixed;
-    background-position: center;
-    background-size: cover;
+    background: url('https://i.postimg.cc/0Nqq8Z32/pexels-umkreisel-app-956999.jpg') no-repeat fixed center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,74 +24,73 @@
     transition: background 0.5s ease;
   }
   body.dark-theme {
-    background: url('https://i.postimg.cc/FR3bwWW5/pexels-padrinan-19670.png') no-repeat fixed;
-    background-position: center;
-    background-size: cover;
+    background: url('https://i.postimg.cc/FR3bwWW5/pexels-padrinan-19670.png') no-repeat fixed center/cover;
     color: white;
   }
   #calc {
     backdrop-filter: blur(15px);
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 25px;
-    padding: 20px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 20px 20px 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     width: 100%;
-    max-width: 425px;
+    max-width: 400px;
     min-width: 280px;
     direction: rtl;
     color: inherit;
     transition: background 0.5s ease, color 0.5s ease;
   }
   body.dark-theme #calc {
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.55);
   }
   #dsp {
     width: 100%;
     border-radius: 15px;
     border: none;
     text-align: right;
-    backdrop-filter: blur(15px);
-    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.25);
     color: black;
-    padding: 15px;
-    margin-bottom: 20px;
-    font-size: clamp(1.5rem, 6vw, 2rem);
-    font-weight: bold;
+    padding: 18px 20px;
+    margin-bottom: 22px;
+    font-size: 2rem;
+    font-weight: 700;
     outline: none;
     transition: background 0.5s ease, color 0.5s ease;
     word-wrap: break-word;
-    min-height: 60px;
+    min-height: 70px;
     overflow-x: auto;
   }
   body.dark-theme #dsp {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     color: white;
   }
   #ks {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: clamp(8px, 2vw, 10px);
+    gap: 10px;
   }
   button {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border-radius: 15px;
+    border-radius: 12px;
     border: none;
-    font-size: clamp(1rem, 5vw, 1.5rem);
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: 700;
     cursor: pointer;
     background-color: #fff;
     color: black;
     transition: all 0.2s ease;
     user-select: none;
     touch-action: manipulation;
+    padding: 0;
   }
   body.dark-theme button {
     background-color: #333;
     color: white;
   }
   button:hover, button:focus-visible {
-    transform: scale(1.05);
+    transform: scale(1.06);
     background-color: #d3d3d3;
   }
   body.dark-theme button:hover, body.dark-theme button:focus-visible {
@@ -122,12 +117,13 @@
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease;
+    border-radius: 12px;
   }
   .img-btn img {
-    width: 100%;
+    width: 70%;
     aspect-ratio: 1 / 1;
     object-fit: contain;
-    border-radius: 15px;
+    border-radius: 12px;
     pointer-events: none;
   }
   .img-btn:hover, .img-btn:focus-visible {
@@ -136,12 +132,12 @@
   footer#copyright {
     margin-top: 20px;
     text-align: center;
-    font-size: clamp(0.9rem, 3vw, 1.5rem);
+    font-size: clamp(1rem, 3vw, 1.3rem);
     color: white;
     background: rgba(0, 0, 0, 0.4);
-    padding: 10px 12px;
+    padding: 12px 15px;
     border-radius: 20px 10px 30%;
-    font-weight: bold;
+    font-weight: 700;
     width: fit-content;
     max-width: 90%;
   }
@@ -150,7 +146,7 @@
     100% {background-position: 200% 0;}
   }
   #dsp::placeholder {
-    font-weight: bold;
+    font-weight: 700;
     color: transparent;
     background: linear-gradient(90deg, red, orange, yellow, red);
     background-size: 200%;
@@ -160,8 +156,8 @@
   }
   .theme-switch {
     position: absolute;
-    top: clamp(10px, 3vw, 20px);
-    right: clamp(10px, 3vw, 20px);
+    top: clamp(12px, 4vw, 22px);
+    right: clamp(12px, 4vw, 22px);
     width: clamp(50px, 12vw, 60px);
     height: clamp(28px, 8vw, 34px);
     display: inline-block;
@@ -202,52 +198,48 @@
     background-image: url("https://i.postimg.cc/cC7sFvMW/dark.png");
   }
 
-  /* Responsive improvements */
-  @media (max-width: 600px) {
-    #calc {
-      padding: 15px;
-      border-radius: 20px;
-    }
-    #dsp {
-      padding: 12px;
-      min-height: 50px;
-    }
-    button {
-      border-radius: 12px;
-    }
-  }
+  /* Responsive tweaks */
   @media (max-width: 400px) {
     #calc {
-      padding: 12px;
+      max-width: 350px;
+      padding: 15px 15px 20px;
     }
     #dsp {
-      font-size: clamp(1.2rem, 5vw, 1.5rem);
-      padding: 10px;
-      min-height: 45px;
+      font-size: 1.8rem;
+      padding: 14px 16px;
+      min-height: 60px;
     }
     button {
-      font-size: clamp(0.9rem, 4.5vw, 1.2rem);
+      font-size: 1.2rem;
       border-radius: 10px;
     }
     #ks {
-      gap: 6px;
+      gap: 8px;
     }
   }
   @media (max-width: 320px) {
+    #calc {
+      max-width: 300px;
+      padding: 12px 12px 18px;
+    }
     #dsp {
-      min-height: 40px;
+      font-size: 1.5rem;
+      min-height: 50px;
+      padding: 12px 14px;
     }
     button {
-      font-size: clamp(0.8rem, 4vw, 1rem);
+      font-size: 1rem;
+    }
+    #ks {
+      gap: 6px;
     }
   }
 </style>
 </head>
 <body>
 <label class="theme-switch">
-  <input type="checkbox" id="theme-toggle">
-  <span class="slider">
-  </span>
+  <input type="checkbox" id="theme-toggle" />
+  <span class="slider"></span>
 </label>
 
 <div id="calc">
@@ -270,8 +262,8 @@
     <button onclick="appendToDisplay('.')">.</button>
     <button onclick="calculate()">احسبهالي</button>
     <button onclick="clearDisplay()" class="operator">امسح يا معلم</button>
-    <button onclick="deleteLastValue()" class="img-btn">
-      <img src="https://i.postimg.cc/cCg2cMGt/back.png" alt="DEL">
+    <button onclick="deleteLastValue()" class="img-btn" aria-label="حذف">
+      <img src="https://i.postimg.cc/cCg2cMGt/back.png" alt="DEL" />
     </button>
   </div>
 </div>
@@ -293,12 +285,9 @@
   }
   function calculate() {
     try {
-   
       let expr = dsp.value;
-      
 
       expr = expr.replace(/÷/g, "/").replace(/×/g, "*").replace(/−/g, "-").replace(/٫/g, ".");
-      
 
       const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
       for(let i=0; i<arabicNums.length; i++) {
@@ -308,7 +297,6 @@
 
       expr = expr.replace(/\s+/g, '');
 
-
       if(expr.trim() === "") {
         dsp.value = "";
         return;
@@ -317,7 +305,7 @@
       let result = eval(expr);
 
       if(typeof result === "number") {
-        result = +result.toFixed(8); // 8 أرقام بعد الفاصلة كفاية
+        result = +result.toFixed(8);
       }
 
       dsp.value = result;
